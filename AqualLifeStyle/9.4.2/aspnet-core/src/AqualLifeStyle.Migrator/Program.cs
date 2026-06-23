@@ -1,5 +1,6 @@
 ﻿using System;
 using Castle.Facilities.Logging;
+using DotNetEnv;
 using Abp;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Collections.Extensions;
@@ -13,6 +14,9 @@ namespace AqualLifeStyle.Migrator
 
         public static void Main(string[] args)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            // Load environment variables from a local .env file for migrator runs
+            Env.Load();
             ParseArgs(args);
 
             using (var bootstrapper = AbpBootstrapper.Create<AqualLifeStyleMigratorModule>())
