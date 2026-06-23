@@ -9,7 +9,7 @@ namespace AqualLifeStyle.Domain.Enquiries
         public int CustomerId { get; private set; }
         public int ProductId { get; private set; }
         public string Message { get; private set; }
-        public string? Response { get; private set; }
+        public string Response { get; private set; }
         public EnquiryStatus Status { get; private set; }
         public DateTime CreatedAt { get; private set; }
 
@@ -23,6 +23,7 @@ namespace AqualLifeStyle.Domain.Enquiries
             Message = message.Trim();
             Status = EnquiryStatus.Pending;
             CreatedAt = DateTime.UtcNow;
+            Response = string.Empty;
         }
 
         public static Enquiry Create(int customerId, int productId, string message)
