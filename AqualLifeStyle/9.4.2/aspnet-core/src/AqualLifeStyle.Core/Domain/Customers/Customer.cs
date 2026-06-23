@@ -1,0 +1,45 @@
+using System;
+using Abp.Domain.Entities;
+using AqualLifeStyle.Domain.Common;
+
+namespace AqualLifeStyle.Domain.Customers
+{
+    public class Customer : Entity<int>
+    {
+        public string Name { get; private set; }
+        public EmailAddress Email { get; private set; }
+        public int MembershipId { get; private set; }
+        public bool IsActive { get; private set; }
+
+        protected Customer() { }
+
+        private Customer(string name, EmailAddress email, int membershipId, bool isActive = true)
+        {
+            SetName(name);
+            Email = email ?? throw new ArgumentNullException(nameof(email));
+            MembershipId = membershipId;
+            IsActive = isActive;
+        }
+
+        public static Customer Create(string name, EmailAddress email, int membershipId)
+        {
+            return new Customer(name, email, membershipId, true);
+        }
+
+        public void ChangeMembership(int newMembershipId)
+        {
+            if (newMembershipId <= 0) throw new ArgumentException("MembershipId must be positive.", nameof(newMembershipId));
+            MembershipId = newMembershipId;
+        }
+
+        public void Activate() => IsActive = true;
+
+        public void Deactivate() => IsActive = false;
+
+        private void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Customer name is required.", nameof(name));
+            Name = name.Trim();
+        }
+    }
+}
