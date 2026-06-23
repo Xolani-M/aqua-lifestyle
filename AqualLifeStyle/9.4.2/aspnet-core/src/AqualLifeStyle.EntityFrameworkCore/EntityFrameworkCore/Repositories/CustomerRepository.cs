@@ -1,8 +1,10 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
 using Abp.EntityFrameworkCore;
 using Abp.EntityFrameworkCore.Repositories;
 using AqualLifeStyle.Domain.Customers;
+using Microsoft.EntityFrameworkCore;
 
 namespace AqualLifeStyle.EntityFrameworkCore.Repositories
 {
@@ -13,14 +15,10 @@ namespace AqualLifeStyle.EntityFrameworkCore.Repositories
         {
         }
 
-        public Task<Customer> GetByIdAsync(int id)
+        public async Task<bool> ExistsByEmailAsync(string email)
         {
-            return GetAsync(id);
-        }
-
-        public Task AddAsync(Customer customer)
-        {
-            return InsertAsync(customer);
+            var dbContext = await GetDbContextAsync();
+            return await dbContext.Set<Customer>().AnyAsync(c => c.Email.Value == email);
         }
     }
 }

@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
+using Abp.Domain.Repositories;
 
 namespace AqualLifeStyle.Domain.Enquiries
 {
-    public interface IEnquiryRepository
+    public interface IEnquiryRepository : IRepository<Enquiry, int>
     {
-        Task<Enquiry> GetByIdAsync(int id);
-        Task AddAsync(Enquiry enquiry);
     }
 }
