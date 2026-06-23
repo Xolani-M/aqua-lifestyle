@@ -9,7 +9,12 @@ namespace AqualLifeStyle.Domain.Common
             @"^[^\s@]+@[^\s@]+\.[^\s@]+$",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-        public string Value { get; }
+        public string Value { get; private set; }
+
+        private EmailAddress()
+        {
+            Value = string.Empty;
+        }
 
         public EmailAddress(string email)
         {
@@ -25,9 +30,9 @@ namespace AqualLifeStyle.Domain.Common
 
         public override string ToString() => Value;
 
-        public bool Equals(EmailAddress? other) => other is not null && string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
+        public bool Equals(EmailAddress other) => other is not null && string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
 
-        public override bool Equals(object? obj) => obj is EmailAddress other && Equals(other);
+        public override bool Equals(object obj) => obj is EmailAddress other && Equals(other);
 
         public override int GetHashCode() => StringComparer.OrdinalIgnoreCase.GetHashCode(Value);
 

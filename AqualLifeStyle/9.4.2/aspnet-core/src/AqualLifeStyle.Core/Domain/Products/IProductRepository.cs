@@ -4,7 +4,7 @@ namespace AqualLifeStyle.Domain.Products
 {
     public interface IProductRepository
     {
-        Task<Product?> GetByIdAsync(int id);
+        Task<Product> GetByIdAsync(int id);
         Task AddAsync(Product product);
     }
 }

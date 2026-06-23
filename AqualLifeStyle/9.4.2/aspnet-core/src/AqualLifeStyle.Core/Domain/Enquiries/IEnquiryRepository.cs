@@ -4,7 +4,7 @@ namespace AqualLifeStyle.Domain.Enquiries
 {
     public interface IEnquiryRepository
     {
-        Task<Enquiry?> GetByIdAsync(int id);
+        Task<Enquiry> GetByIdAsync(int id);
         Task AddAsync(Enquiry enquiry);
     }
 }
