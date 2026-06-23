@@ -9,7 +9,12 @@ namespace AqualLifeStyle.Domain.Common
             @"^[^\s@]+@[^\s@]+\.[^\s@]+$",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-        public string Value { get; }
+        public string Value { get; private set; }
+
+        private EmailAddress()
+        {
+            Value = string.Empty;
+        }
 
         public EmailAddress(string email)
         {
