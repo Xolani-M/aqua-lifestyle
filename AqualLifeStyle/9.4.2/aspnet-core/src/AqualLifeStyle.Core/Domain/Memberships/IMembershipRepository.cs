@@ -3,7 +3,12 @@ using Abp.Domain.Repositories;
 
 namespace AqualLifeStyle.Domain.Memberships
 {
-    public interface IMembershipRepository : IRepository<Membership, int>
+    public interface IMembershipLookup
+    {
+        Task<Membership> GetAsync(int id);
+    }
+
+    public interface IMembershipRepository : IRepository<Membership, int>, IMembershipLookup
     {
         Task<bool> ExistsByNameAsync(string name);
         Task<Membership> GetByIdAsync(int id);
