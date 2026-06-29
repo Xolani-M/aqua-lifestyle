@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
+using Abp.Domain.Repositories;
 
 namespace AqualLifeStyle.Domain.Customers
 {
-    public interface ICustomerRepository
+    public interface ICustomerRepository : IRepository<Customer, int>
     {
-        Task<Customer> GetByIdAsync(int id);
-        Task AddAsync(Customer customer);
+        Task<bool> ExistsByEmailAsync(string email);
     }
 }
