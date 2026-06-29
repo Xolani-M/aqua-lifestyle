@@ -41,7 +41,6 @@ namespace AqualLifeStyle.EntityFrameworkCore
                 {
                     email.Property(p => p.Value).HasColumnName("Email").IsRequired().HasMaxLength(256);
                 });
-                entity.Property(e => e.MembershipId).IsRequired();
             });
 
             modelBuilder.Entity<Product>(entity =>

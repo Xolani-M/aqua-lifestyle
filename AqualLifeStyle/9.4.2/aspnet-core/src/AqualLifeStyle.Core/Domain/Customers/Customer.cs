@@ -8,12 +8,12 @@ namespace AqualLifeStyle.Domain.Customers
     {
         public string Name { get; private set; }
         public EmailAddress Email { get; private set; }
-        public int MembershipId { get; private set; }
+        public int? MembershipId { get; private set; }
         public bool IsActive { get; private set; }
 
         protected Customer() { }
 
-        private Customer(string name, EmailAddress email, int membershipId, bool isActive = true)
+        private Customer(string name, EmailAddress email, int? membershipId = null, bool isActive = true)
         {
             SetName(name);
             Email = email ?? throw new ArgumentNullException(nameof(email));
@@ -21,14 +21,18 @@ namespace AqualLifeStyle.Domain.Customers
             IsActive = isActive;
         }
 
-        public static Customer Create(string name, EmailAddress email, int membershipId)
+        public static Customer Create(string name, EmailAddress email, int? membershipId = null)
         {
             return new Customer(name, email, membershipId, true);
         }
 
-        public void ChangeMembership(int newMembershipId)
+        public void ChangeMembership(int? newMembershipId)
         {
-            if (newMembershipId <= 0) throw new ArgumentException("MembershipId must be positive.", nameof(newMembershipId));
+            if (newMembershipId.HasValue && newMembershipId.Value <= 0)
+            {
+                throw new ArgumentException("MembershipId must be positive.", nameof(newMembershipId));
+            }
+
             MembershipId = newMembershipId;
         }
 

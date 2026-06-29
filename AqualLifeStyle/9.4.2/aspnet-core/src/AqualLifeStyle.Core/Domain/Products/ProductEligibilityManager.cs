@@ -13,6 +13,7 @@ namespace AqualLifeStyle.Domain.Products
             if (!product.IsActive) return false;
 
             if (product.MembershipId == null) return true; // product available to everyone
+            if (!customer.MembershipId.HasValue) return false;
 
             return product.MembershipId == customer.MembershipId;
         }
