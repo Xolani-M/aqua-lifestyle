@@ -9,6 +9,7 @@ namespace AqualLifeStyle.Application.Memberships
     {
         Task<IReadOnlyList<MembershipDto>> GetAllAsync();
         Task<MembershipDto> GetAsync(int id);
+        Task<MembershipDto> UpdateAsync(MembershipDto input);
         Task CreateAsync(CreateMembershipDto input);
     }
 }

@@ -5,16 +5,19 @@ using Abp.Application.Services;
 using AqualLifeStyle.Application.Customers.Dto;
 using AqualLifeStyle.Domain.Common;
 using AqualLifeStyle.Domain.Customers;
+using AqualLifeStyle.Domain.Memberships;
 
 namespace AqualLifeStyle.Application.Customers
 {
     public class CustomerAppService : AqualLifeStyleAppServiceBase, ICustomerAppService
     {
         private readonly ICustomerRepository _customerRepository;
+        private readonly IMembershipRepository _membershipRepository;
 
-        public CustomerAppService(ICustomerRepository customerRepository)
+        public CustomerAppService(ICustomerRepository customerRepository, IMembershipRepository membershipRepository)
         {
             _customerRepository = customerRepository;
+            _membershipRepository = membershipRepository;
         }
 
         public async Task<IReadOnlyList<CustomerDto>> GetAllAsync()
@@ -45,6 +48,12 @@ namespace AqualLifeStyle.Application.Customers
 
         public async Task CreateAsync(CreateCustomerDto input)
         {
+            if (input.MembershipId.HasValue)
+            {
+                var membership = await _membershipRepository.GetAsync(input.MembershipId.Value);
+                membership.EnsureCanBeAssignedToCustomer();
+            }
+
             var email = new EmailAddress(input.Email);
             var customer = Customer.Create(input.Name, email, input.MembershipId);
             await _customerRepository.InsertAsync(customer);

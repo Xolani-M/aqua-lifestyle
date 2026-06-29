@@ -43,6 +43,22 @@ namespace AqualLifeStyle.Application.Memberships
             };
         }
 
+        public async Task<MembershipDto> UpdateAsync(MembershipDto input)
+        {
+            var membership = await _membershipRepository.GetAsync(input.Id);
+            membership.Rename(input.Name);
+            membership.UpdateDescription(input.Description);
+            await _membershipRepository.UpdateAsync(membership);
+
+            return new MembershipDto
+            {
+                Id = membership.Id,
+                Name = membership.Name,
+                Description = membership.Description,
+                IsActive = membership.IsActive
+            };
+        }
+
         public async Task CreateAsync(CreateMembershipDto input)
         {
             var membership = Membership.Create(input.Name, input.Description);
