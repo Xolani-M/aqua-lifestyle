@@ -1,3 +1,5 @@
+using AqualLifeStyle.Domain.Enums;
+
 namespace AqualLifeStyle.Application.Memberships.Dto
 {
     public class MembershipDto
@@ -6,5 +8,6 @@ namespace AqualLifeStyle.Application.Memberships.Dto
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsActive { get; set; }
+        public MembershipType MembershipType { get; set; }
     }
 }

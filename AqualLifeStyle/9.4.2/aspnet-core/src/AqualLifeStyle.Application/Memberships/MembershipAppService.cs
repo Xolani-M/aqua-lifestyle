@@ -27,7 +27,8 @@ namespace AqualLifeStyle.Application.Memberships
                 Id = m.Id,
                 Name = m.Name,
                 Description = m.Description,
-                IsActive = m.IsActive
+                IsActive = m.IsActive,
+                MembershipType = m.MembershipType
             }).ToList();
         }
 
@@ -39,7 +40,8 @@ namespace AqualLifeStyle.Application.Memberships
                 Id = membership.Id,
                 Name = membership.Name,
                 Description = membership.Description,
-                IsActive = membership.IsActive
+                IsActive = membership.IsActive,
+                MembershipType = membership.MembershipType
             };
         }
 
@@ -48,6 +50,7 @@ namespace AqualLifeStyle.Application.Memberships
             var membership = await _membershipRepository.GetAsync(input.Id);
             membership.Rename(input.Name);
             membership.UpdateDescription(input.Description);
+            membership.ChangeType(input.MembershipType);
             await _membershipRepository.UpdateAsync(membership);
 
             return new MembershipDto
@@ -55,13 +58,14 @@ namespace AqualLifeStyle.Application.Memberships
                 Id = membership.Id,
                 Name = membership.Name,
                 Description = membership.Description,
-                IsActive = membership.IsActive
+                IsActive = membership.IsActive,
+                MembershipType = membership.MembershipType
             };
         }
 
         public async Task CreateAsync(CreateMembershipDto input)
         {
-            var membership = Membership.Create(input.Name, input.Description);
+            var membership = Membership.Create(input.Name, input.Description, input.MembershipType);
             await _membershipRepository.InsertAsync(membership);
         }
     }

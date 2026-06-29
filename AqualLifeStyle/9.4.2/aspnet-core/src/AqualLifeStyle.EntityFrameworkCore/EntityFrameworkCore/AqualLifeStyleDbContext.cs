@@ -31,6 +31,7 @@ namespace AqualLifeStyle.EntityFrameworkCore
                 entity.ToTable("Memberships");
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(128);
                 entity.Property(e => e.Description).HasMaxLength(512);
+                entity.Property(e => e.MembershipType).IsRequired();
             });
 
             modelBuilder.Entity<Customer>(entity =>
