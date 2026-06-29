@@ -13,6 +13,7 @@ namespace AqualLifeStyle.EntityFrameworkCore
     public class AqualLifeStyleDbContext : AbpZeroDbContext<Tenant, Role, User, AqualLifeStyleDbContext>
     {
         public virtual DbSet<Membership> Memberships { get; set; }
+        public virtual DbSet<MembershipBenefit> MembershipBenefits { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Enquiry> Enquiries { get; set; }
@@ -32,6 +33,15 @@ namespace AqualLifeStyle.EntityFrameworkCore
                 entity.Property(e => e.Name).IsRequired().HasMaxLength(128);
                 entity.Property(e => e.Description).HasMaxLength(512);
                 entity.Property(e => e.MembershipType).IsRequired();
+            });
+
+            modelBuilder.Entity<MembershipBenefit>(entity =>
+            {
+                entity.ToTable("MembershipBenefits");
+                entity.Property(e => e.BenefitName).IsRequired().HasMaxLength(128);
+                entity.Property(e => e.Description).HasMaxLength(512);
+                entity.Property(e => e.MembershipType).IsRequired();
+                entity.Property(e => e.IsActive).IsRequired();
             });
 
             modelBuilder.Entity<Customer>(entity =>
